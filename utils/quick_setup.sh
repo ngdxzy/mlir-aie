@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 ##===- quick_setup.sh - Setup IRON for Ryzen AI dev ----------*- Script -*-===##
-# 
+#
 # This file licensed under the Apache License v2.0 with LLVM Exceptions.
 # See https://llvm.org/LICENSE.txt for license information.
 # SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
-# 
+#
 ##===----------------------------------------------------------------------===##
 #
 # This script is the quickest path to running the Ryzen AI reference designs.
-# Please have the Vitis tools and XRT environment setup before sourcing the 
+# Please have the Vitis tools and XRT environment setup before sourcing the
 # script.
 #
 # source ./utils/quick_setup.sh
@@ -18,7 +18,7 @@
 echo "Setting up RyzenAI developement tools..."
 if [[ $WSL_DISTRO_NAME == "" ]]; then
   XRTSMI=`which xrt-smi`
-  if ! test -f "$XRTSMI"; then 
+  if ! test -f "$XRTSMI"; then
     echo "XRT is not installed"
     return 1
   fi
@@ -57,10 +57,10 @@ $my_python -m venv ironenv
 source ironenv/bin/activate
 python3 -m pip install --upgrade pip
 
-python3 -m pip install mlir_aie -f https://github.com/Xilinx/mlir-aie/releases/expanded_assets/latest-wheels/ 
+python3 -m pip install mlir_aie==0.0.1.2025031104+0591b8d -f https://github.com/Xilinx/mlir-aie/releases/expanded_assets/latest-wheels/
 export MLIR_AIE_INSTALL_DIR="$(pip show mlir_aie | grep ^Location: | awk '{print $2}')/mlir_aie"
 
-python3 -m pip install llvm-aie -f https://github.com/Xilinx/llvm-aie/releases/expanded_assets/nightly
+python3 -m pip install llvm-aie==19.0.0.2025031101+1ad603c6 -f https://github.com/Xilinx/llvm-aie/releases/expanded_assets/nightly
 export PEANO_INSTALL_DIR="$(pip show llvm-aie | grep ^Location: | awk '{print $2}')/llvm-aie"
 
 python3 -m pip install -r python/requirements.txt
